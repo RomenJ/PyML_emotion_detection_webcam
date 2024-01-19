@@ -82,11 +82,9 @@ def predict_emotion(frame,faceNet,emotionModel):
 			face = cv2.resize(face, (48, 48))
 			face2 = img_to_array(face)
 			face2 = np.expand_dims(face2,axis=0)
-
 			# Se agrega los rostros y las localizaciones a las listas
 			faces.append(face2)
 			locs.append((Xi, Yi, Xf, Yf))
-
 			pred = emotionModel.predict(face2)
 			preds.append(pred[0])
 
@@ -96,7 +94,6 @@ while True:
 	# Se toma un frame de la cámara y se redimensiona
 	ret, frame = cam.read()
 	frame = imutils.resize(frame, width=640)
-	
 
 	(locs, preds) = predict_emotion(frame,faceNet,emotionModel)
 	
@@ -108,8 +105,6 @@ while True:
 
 		(Xi, Yi, Xf, Yf) = box
 		(angry,disgust,fear,happy,neutral,sad,surprise) = pred
-
-
 		label = ''
 		# Se agrega la probabilidad en el label de la imagen
 		label = "{}: {:.0f}%".format(classes[np.argmax(pred)], max(angry,disgust,fear,happy,neutral,sad,surprise) * 100)
@@ -122,11 +117,11 @@ while True:
 		formatted_date = "{}/{}/{}: {} Hora: {}, Minuto: {}, Segundos: {}, Milisegundo: {}".format(
     	x.day, x.month, x.year, x.strftime("%A"), x.strftime("%H"), x.strftime("%M"), x.strftime("%S"), x.strftime("%f")[:3])
 		porcent_emo=max(angry,disgust,fear,happy,neutral,sad,surprise) * 100
-		print("Porcentaje de la emoción%: ", porcent_emo)
+		print("Porcentaje de la emoción %: ", porcent_emo)
 		print("Emoción exclusiva:", emo)
 		print("@Emoción y porcentaje identificado por el algoritmo:",label)	
 	# Imprimir el resultado
-		print("FECHA DE LA EMOCIÓNCCCC:", formatted_date)
+		print("FECHA DE LA EMOCIÓN:", formatted_date)
 
 	#Noadd
 # Crear DataFrame
@@ -181,7 +176,6 @@ df[df['emo']=="fear"]['horact'].hist(alpha=0.7, color='yellow', label='Fear')
 df[df['emo']=="surprise"]['horact'].hist(alpha=0.7, color='orange', label='Surprise')
 
 plt.legend(["Sad", "Happy","Neutral", "Angry", "Fear", "Surprise" ])
-
 plt.title("Análsis de la cualidad de las emociones")
 plt.xlabel('Segundos de la evaluación')
 plt.ylabel('Nº de veces que se ha presentado la emoción')
